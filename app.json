@@ -1,0 +1,6 @@
+{
+  "name": "Atlanta Scala Microservice Example",
+  "description": "Microservice example using Akka HTTP, Neo4j, and the LinkedIn API",
+  "website": "https://github.com/neilshannon/atlanta-scala-microservice",
+  "success_url": "/health"
+}
