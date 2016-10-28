@@ -23,6 +23,7 @@ $ sbt
 ## cloud runtime
 #### environment variables
 | variable name  | variable value |
+|----------------|----------------|
 | neo4j.host     | host for neo4j server |
 | neo4j.webPort  | REST API port for neo4j |
 | neo4j.boltPort | binary Bolt port for neo4j |
