@@ -4,7 +4,8 @@ applications:
   path: target/scala-2.11/atlanta-scala-microservice-assembly-1.0.jar
   services:
   - oracle-db
-  memory: 768M
+  memory: 2048M
+  timeout: 180
   disk_quota: 2G
   env:
     TZ: UTC
