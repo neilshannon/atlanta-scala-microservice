@@ -26,7 +26,6 @@ libraryDependencies ++= {
     "com.typesafe"       % "config" % "1.3.0",
     "org.json4s"        %% "json4s-native" % "3.3.0",
     "ch.qos.logback"     % "logback-classic" % "1.1.3",
-    //"org.anormcypher"   %% "anormcypher" % "0.9.1",
     "org.scalatest"     %% "scalatest" % scalaTestV % "test"
   )
 }

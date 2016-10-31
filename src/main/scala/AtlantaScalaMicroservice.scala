@@ -44,7 +44,7 @@ object AtlantaScalaMicroservice extends App with Service with ServiceConfig {
   override val logger = Logging(system, getClass)
 
   private val interface: String = config.getString("http.interface")
-  private val port: Int = config.getInt("PORT")
+  private val port: Int = config.getInt("http.port")
 
   logger.info("Starting http server...")
 
