@@ -10,4 +10,3 @@ applications:
   env:
     TZ: UTC
     NEW_RELIC_LOG: stdout
-
