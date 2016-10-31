@@ -1,0 +1,1 @@
+-Dhttp.proxyHost=str-www-proxy2-qa.homedepot.com -Dhttp.proxyPort=8080 -Dhttps.proxyHost=str-www-proxy2-qa.homedepot.com -Dhttps.proxyPort=8080 -Djline.WindowsTerminal.directConsole=false
