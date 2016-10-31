@@ -21,6 +21,9 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-http-experimental" % akkaV,
     "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaV,
     "com.typesafe.akka" %% "akka-http-testkit" % akkaV,
+    "com.typesafe"       % "config" % "1.3.0",
+    "org.json4s"        %% "json4s-native" % "3.3.0",
+    "ch.qos.logback"     % "logback-classic" % "1.1.3" % "runtime",
     "org.anormcypher"   %% "anormcypher" % "0.9.1",
     "org.scalatest"     %% "scalatest" % scalaTestV % "test"
   )
