@@ -4,8 +4,9 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.{ActorMaterializer, Materializer}
+import com.ntsdev.ServiceConfig
 import com.ntsdev.domain.PersonWithCompany
-import com.typesafe.config.{Config, ConfigFactory}
+import com.typesafe.config.Config
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.ExecutionContextExecutor
@@ -35,17 +36,15 @@ trait Service extends Protocols {
   }
 }
 
-object AtlantaScalaMicroservice extends App with Service {
+object AtlantaScalaMicroservice extends App with Service with ServiceConfig {
   override implicit val system = ActorSystem()
   override implicit val executor = system.dispatcher
   override implicit val materializer = ActorMaterializer()
 
-  val systemEnvironment = ConfigFactory.systemEnvironment()
-  override val config = ConfigFactory.load().withFallback(systemEnvironment)
   override val logger = Logging(system, getClass)
 
   private val interface: String = config.getString("http.interface")
-  private val port: Int = config.getInt("http.port")
+  private val port: Int = config.getInt("PORT")
 
   logger.info("Starting http server...")
 
