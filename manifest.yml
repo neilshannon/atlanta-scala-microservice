@@ -4,7 +4,8 @@ applications:
   path: target/scala-2.11/atlanta-scala-microservice-assembly-1.0.jar
   services:
   - oracle-db
-  memory: 1024M
+  memory: 768M
+  disk_quota: 2G
   env:
     TZ: UTC
     NEW_RELIC_LOG: stdout
