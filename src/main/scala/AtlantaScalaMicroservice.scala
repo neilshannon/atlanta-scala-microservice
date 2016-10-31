@@ -1,33 +1,14 @@
 import akka.actor.ActorSystem
 import akka.event.{Logging, LoggingAdapter}
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.client.RequestBuilding
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
-import akka.http.scaladsl.marshalling.ToResponseMarshallable
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpRequest, HttpResponse}
-import akka.http.scaladsl.model.StatusCodes._
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.{ActorMaterializer, Materializer}
-import akka.stream.scaladsl.{Flow, Sink, Source}
-import com.typesafe.config.Config
-import com.typesafe.config.ConfigFactory
-import java.io.IOException
-
 import com.ntsdev.domain.PersonWithCompany
-import org.anormcypher.Neo4jStream
-
-import scala.concurrent.{ExecutionContextExecutor, Future}
-import scala.math._
+import com.typesafe.config.{Config, ConfigFactory}
 import spray.json.DefaultJsonProtocol
 
-
-
-
-
-
-
-
+import scala.concurrent.ExecutionContextExecutor
 
 trait Protocols extends DefaultJsonProtocol {
   implicit val personWithCompanyFormat = jsonFormat10(PersonWithCompany.apply)
@@ -63,5 +44,13 @@ object AtlantaScalaMicroservice extends App with Service {
   override val config = ConfigFactory.load().withFallback(systemEnvironment)
   override val logger = Logging(system, getClass)
 
-  Http().bindAndHandle(routes, config.getString("http.interface"), config.getInt("http.port"))
+  private val interface: String = config.getString("http.interface")
+  private val port: Int = config.getInt("http.port")
+
+  logger.info("Starting http server...")
+
+  Http().bindAndHandle(routes, interface, port)
+
+  logger.info(s"Listening on port [$port] interface [$interface]")
+
 }
