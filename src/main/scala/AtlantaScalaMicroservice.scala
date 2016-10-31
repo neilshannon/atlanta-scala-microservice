@@ -59,7 +59,8 @@ object AtlantaScalaMicroservice extends App with Service {
   override implicit val executor = system.dispatcher
   override implicit val materializer = ActorMaterializer()
 
-  override val config = ConfigFactory.load()
+  val systemEnvironment = ConfigFactory.systemEnvironment()
+  override val config = ConfigFactory.load().withFallback(systemEnvironment)
   override val logger = Logging(system, getClass)
 
   Http().bindAndHandle(routes, config.getString("http.interface"), config.getInt("http.port"))
