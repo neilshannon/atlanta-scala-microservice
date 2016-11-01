@@ -1,4 +1,4 @@
-package com.ntsdev
+package com.ntsdev.config
 
 import com.typesafe.config.ConfigFactory
 

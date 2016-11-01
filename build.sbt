@@ -11,7 +11,9 @@ resolvers ++= Seq(
   "Maven Central" at "http://central.maven.org/maven2/",
   "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/",
   "JCenter" at "https://jcenter.bintray.com/",
-  "Spring Maven" at "http://repo.spring.io/libs-release"
+  "Spring Maven" at "http://repo.spring.io/libs-release",
+  "Spring Snapshots" at "http://repo.spring.io/libs-snapshot",
+  "Neo4j Maven Snapshots" at "http://m2.neo4j.org/content/repositories/snapshots"
 )
 
 resolvers += Resolver.jcenterRepo
@@ -19,20 +21,35 @@ resolvers += Resolver.jcenterRepo
 libraryDependencies ++= {
   val akkaV       = "2.4.7"
   val scalaTestV  = "2.2.6"
-  val springBootV = "1.4.1.RELEASE"
+  val springV     = "4.3.1.RELEASE"
+  val springDataV = "4.2.0.M1"
+  val neo4jOgmV   = "2.0.5"
 
   Seq(
     "com.typesafe.akka"       %% "akka-http-core" % akkaV,
     "com.typesafe.akka"       %% "akka-http-experimental" % akkaV,
     "com.typesafe.akka"       %% "akka-http-spray-json-experimental" % akkaV,
     "com.typesafe.akka"       %% "akka-http-testkit" % akkaV,
-    "org.springframework.boot" % "spring-boot-starter-data-neo4j" % springBootV,
-    "org.neo4j"                % "neo4j-ogm-bolt-driver" % "2.0.5",
-    "org.neo4j"                % "neo4j-ogm-embedded-driver" % "2.0.5",
+    "org.springframework"      % "spring-core" % springV,
+    "org.springframework"      % "spring-aop" % springV,
+    "org.springframework"      % "spring-aspects" % springV,
+    "org.springframework"      % "spring-beans" % springV,
+    "org.springframework"      % "spring-context" % springV,
+    "org.springframework.data" % "spring-data-commons" % "1.13.0.M1",
+    "org.springframework.data" % "spring-data-neo4j" % springDataV,
+    "org.neo4j"                % "neo4j-ogm-api" % neo4jOgmV,
+    "org.neo4j"                % "neo4j-ogm-core" % neo4jOgmV,
+    "org.neo4j"                % "neo4j-ogm-compiler" % neo4jOgmV,
+    "org.neo4j"                % "neo4j-ogm-bolt-driver" % neo4jOgmV,
+    "org.neo4j"                % "neo4j-ogm-embedded-driver" % neo4jOgmV,
+    "org.neo4j"                % "neo4j" % "3.0.3",
     "com.typesafe"             % "config" % "1.3.0",
     "org.json4s"              %% "json4s-native" % "3.3.0",
     "ch.qos.logback"           % "logback-classic" % "1.1.3",
-    "org.scalatest"           %% "scalatest" % scalaTestV % "test"
+    "org.scalatest"           %% "scalatest" % scalaTestV % "test",
+    "org.mockito"              % "mockito-core" % "2.2.9" % "test",
+    "org.springframework"      % "spring-test" % springV % "test"
+
   )
 }
 
@@ -42,6 +59,6 @@ assemblyMergeStrategy in assembly := {
   case x => MergeStrategy.first
 }
 
-mainClass in Global := Some("com.ntsdev.com.ntsdev.run.AtlantaScalaMicroservice")
+mainClass in Global := Some("com.ntsdev.com.SpringRunner")
 
 Revolver.settings

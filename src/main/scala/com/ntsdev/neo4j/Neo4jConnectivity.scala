@@ -1,6 +1,6 @@
 package com.ntsdev.neo4j
 
-import com.ntsdev.ServiceConfig
+import com.ntsdev.config.ServiceConfig
 
 trait Neo4jConnectivity extends ServiceConfig {
   val neo4jHost = config.getString("services.neo4j.host")

@@ -10,4 +10,4 @@ case class Location(@GraphId var id: java.lang.Long = 0L, @Property name: String
   }
 }
 
-case class Country(@Property code: String)
+case class Country(@GraphId var id: java.lang.Long = 0L, @Property code: String)
