@@ -1,6 +1,12 @@
 package com.ntsdev.domain
 
+import org.neo4j.ogm.annotation.{GraphId, NodeEntity, Relationship}
+
+import scala.annotation.meta.setter
+
+@NodeEntity
 case class Person(
+                   @(GraphId @setter) var id: java.lang.Long = 0L,
                    firstName: String,
                    lastName: String,
                    headline: String,
@@ -8,10 +14,11 @@ case class Person(
                    industry: String,
                    pictureUrl: Option[String],
                    location: Location,
-                   positions: Option[Array[Position]]
+                   positions: Option[Array[Position]] = None,
+                   @Relationship(`type`="CONNECTED_TO") connections: Set[Person]
                  ) {
 
-  def toPersonWithCompany = {
+  def toPersonWithCompany: PersonWithCompany = {
     val position = currentPosition
     PersonWithCompany(
       firstName,

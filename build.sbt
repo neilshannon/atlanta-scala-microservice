@@ -42,6 +42,6 @@ assemblyMergeStrategy in assembly := {
   case x => MergeStrategy.first
 }
 
-mainClass in Global := Some("AtlantaScalaMicroservice")
+mainClass in Global := Some("com.ntsdev.com.ntsdev.run.AtlantaScalaMicroservice")
 
 Revolver.settings

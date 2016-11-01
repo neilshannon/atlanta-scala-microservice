@@ -414,7 +414,7 @@ echoerr "Detected sbt version $(sbt_version)"
 [[ -f ./build.sbt || -d ./project || -n "$sbt_create" ]] || {
   cat <<EOM
 $(pwd) doesn't appear to be an sbt project.
-If you want to start sbt anyway, run:
+If you want to start sbt anyway, com.ntsdev.run:
   $0 -sbt-create
 
 EOM
@@ -451,7 +451,7 @@ if [ ! -z "$SCALATRA_JREBEL" ]; then
     fi
 fi
 
-# run sbt
+# com.ntsdev.run sbt
 execRunner "$java_cmd" \
   $(get_mem_opts $sbt_mem) \
   $(get_jvm_opts) \

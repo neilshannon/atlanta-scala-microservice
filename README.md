@@ -2,7 +2,7 @@
 
 This project demonstrates using [Akka HTTP](http://doc.akka.io/docs/akka-stream-and-http-experimental/current/scala.html), the LinkedIn API, the Neo4J Graph Database, and Scala to build a microservice. The microservice will pull the connection graph for each user in the room from LinkedIn and show how we are all connected to one another.
 
-## to run
+## to com.ntsdev.run
 
 Start services with sbt:
 

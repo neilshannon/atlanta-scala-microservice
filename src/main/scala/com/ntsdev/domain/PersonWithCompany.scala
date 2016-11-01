@@ -1,6 +1,6 @@
 package com.ntsdev.domain
 
-case class PersonWithCompany(
+final case class PersonWithCompany(
                       firstName: String,
                       lastName: String,
                       headline: String,

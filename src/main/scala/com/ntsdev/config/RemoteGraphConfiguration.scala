@@ -1,28 +1,29 @@
 package com.ntsdev.config
 
 import com.ntsdev.neo4j.Neo4jConnectivity
-import org.neo4j.ogm.config.Configuration
 import org.neo4j.ogm.session.SessionFactory
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
-import org.springframework.context.annotation.{Bean, Profile}
+import org.springframework.context.annotation._
 import org.springframework.data.neo4j.config.Neo4jConfiguration
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-@EnableAutoConfiguration
 @Configuration
+@ComponentScan(basePackages = Array("com.ntsdev.run"))
+@EnableAutoConfiguration
 @Profile(Array("cloud"))
-@EnableNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))
 @EnableTransactionManagement
+@EnableNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))
 class RemoteGraphConfiguration extends Neo4jConfiguration with Neo4jConnectivity {
     private val log = LoggerFactory.getLogger(getClass)
 
     @Bean
-    def getNeo4jConfig: Configuration = {
+    @Primary
+    def getNeo4jConfig: org.neo4j.ogm.config.Configuration = {
         val URI = s"bolt://$neo4jUser:$neo4jPass@$neo4jHost:$neo4jPort"
 
-        val config: Configuration = new Configuration()
+        val config = new org.neo4j.ogm.config.Configuration()
         config
             .driverConfiguration()
             .setDriverClassName("org.neo4j.ogm.drivers.bolt.driver.BoltDriver")
@@ -36,9 +37,12 @@ class RemoteGraphConfiguration extends Neo4jConfiguration with Neo4jConnectivity
     }
 
     @Override
+    @Bean
+    @Primary
     def getSessionFactory: SessionFactory = {
         new SessionFactory(getNeo4jConfig, "com.ntsdev.domain")
     }
+
 }
 object RemoteGraphConfiguration extends RemoteGraphConfiguration
 

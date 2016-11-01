@@ -4,5 +4,5 @@ import com.typesafe.config.ConfigFactory
 
 trait ServiceConfig {
   val systemEnvironment = ConfigFactory.systemEnvironment()
-  val config = ConfigFactory.load().withFallback(systemEnvironment)
+  var config = ConfigFactory.load().withFallback(systemEnvironment)
 }
