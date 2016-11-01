@@ -6,7 +6,10 @@ import akka.http.scaladsl.server.Directives._
 import akka.stream.{ActorMaterializer, Materializer}
 import com.ntsdev.ServiceConfig
 import com.ntsdev.domain.PersonWithCompany
+import com.ntsdev.config.{LocalGraphConfiguration, RemoteGraphConfiguration, RemoteGraphConfiguration$}
 import com.typesafe.config.Config
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.autoconfigure.{EnableAutoConfiguration, SpringBootApplication}
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.ExecutionContextExecutor
@@ -36,6 +39,7 @@ trait Service extends Protocols {
   }
 }
 
+@SpringBootApplication
 object AtlantaScalaMicroservice extends App with Service with ServiceConfig {
   override implicit val system = ActorSystem()
   override implicit val executor = system.dispatcher
@@ -46,9 +50,15 @@ object AtlantaScalaMicroservice extends App with Service with ServiceConfig {
   private val interface: String = config.getString("http.interface")
   private val port: Int = config.getInt("http.port")
 
+
   logger.info("Starting http server...")
 
   Http().bindAndHandle(routes, interface, port)
+
+  if("cloud" equals config.getString("SPRING_PROFILES_ACTIVE"))
+    SpringApplication.run(Array(RemoteGraphConfiguration.getClass.asInstanceOf[AnyRef]), args)
+  else
+    SpringApplication.run(Array(LocalGraphConfiguration.getClass.asInstanceOf[AnyRef]), args)
 
   logger.info(s"Listening on port [$port] interface [$interface]")
 
