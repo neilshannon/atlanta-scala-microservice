@@ -44,7 +44,6 @@ libraryDependencies ++= {
     "org.neo4j"                % "neo4j-ogm-embedded-driver" % neo4jOgmV,
     "org.neo4j"                % "neo4j" % "3.0.3",
     "com.typesafe"             % "config" % "1.3.0",
-    "org.json4s"              %% "json4s-native" % "3.3.0",
     "ch.qos.logback"           % "logback-classic" % "1.1.3",
     "org.scalatest"           %% "scalatest" % scalaTestV % "test",
     "org.mockito"              % "mockito-core" % "2.2.9" % "test",
