@@ -18,7 +18,6 @@ import scala.annotation.meta.setter
 @ComponentScan(
   basePackageClasses = Array(
     classOf[com.ntsdev.repository.PersonRepository],
-    classOf[com.ntsdev.service.TestDataService],
     classOf[com.ntsdev.service.AtlantaScalaMicroservice])
 )
 @Primary

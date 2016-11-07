@@ -7,7 +7,7 @@
         </layout>
     </appender>
 
-    <logger name="org.neo4j.ogm" level="DEBUG"/>
+    <logger name="org.neo4j.ogm" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
