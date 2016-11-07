@@ -11,6 +11,8 @@ class SpringRunner
 object SpringRunner extends App with ServiceConfig {
   val logger = LoggerFactory.getLogger(getClass)
 
+  logger.info(s"Active Spring Profile: [${config.getString("SPRING_PROFILES_ACTIVE")}]")
+
   if("cloud" equals config.getString("SPRING_PROFILES_ACTIVE")) {
     logger.info("Loading cloud configuration...")
     val context: ApplicationContext = new AnnotationConfigApplicationContext(classOf[RemoteGraphConfiguration])
