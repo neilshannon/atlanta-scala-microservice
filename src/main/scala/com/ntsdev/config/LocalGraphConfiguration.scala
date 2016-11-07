@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableExperimentalNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))
 @ComponentScan(
   basePackageClasses = Array(
-    classOf[com.ntsdev.repository.PersonRepository],
     classOf[com.ntsdev.service.TestDataService],
     classOf[com.ntsdev.service.AtlantaScalaMicroservice])
   )

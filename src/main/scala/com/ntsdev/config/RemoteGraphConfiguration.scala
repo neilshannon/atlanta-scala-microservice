@@ -13,11 +13,10 @@ import scala.annotation.meta.setter
 
 @Profile(Array("cloud"))
 @Configuration
-@EnableExperimentalNeo4jRepositories(Array("com.ntsdev.repository"))
+@EnableExperimentalNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))
 @EnableTransactionManagement
 @ComponentScan(
   basePackageClasses = Array(
-    classOf[com.ntsdev.repository.PersonRepository],
     classOf[com.ntsdev.service.AtlantaScalaMicroservice])
 )
 @Primary
