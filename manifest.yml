@@ -8,3 +8,4 @@ applications:
   env:
     NEW_RELIC_LOG: stdout
     SPRING_PROFILES_ACTIVE: cloud
+    JAVA_OPTS: -Dspring.profiles.active=cloud
