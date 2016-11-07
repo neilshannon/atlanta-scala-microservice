@@ -4,15 +4,9 @@ import com.ntsdev.config.{LocalGraphConfiguration, RemoteGraphConfiguration, Ser
 import com.ntsdev.service.TestDataService
 import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationContext
-import org.springframework.context.annotation.{AnnotationConfigApplicationContext, ComponentScan, Configuration}
+import org.springframework.context.annotation.{AnnotationConfigApplicationContext, Configuration}
 
 @Configuration
-@ComponentScan(
-  basePackageClasses = Array(
-    classOf[com.ntsdev.repository.PersonRepository],
-    classOf[com.ntsdev.service.TestDataService],
-    classOf[com.ntsdev.service.AtlantaScalaMicroservice])
-)
 class SpringRunner
 
 object SpringRunner extends App with ServiceConfig {
