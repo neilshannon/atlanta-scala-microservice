@@ -59,6 +59,6 @@ assemblyMergeStrategy in assembly := {
   case x => MergeStrategy.first
 }
 
-mainClass in Global := Some("com.ntsdev.com.SpringRunner")
+mainClass in Global := Some("com.ntsdev.run.SpringRunner")
 
 Revolver.settings

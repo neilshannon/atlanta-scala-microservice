@@ -9,7 +9,7 @@ import org.springframework.data.neo4j.repository.config.EnableExperimentalNeo4jR
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-@Profile(Array("default", "test"))
+@Profile(Array("!cloud"))
 @Configuration
 @EnableTransactionManagement
 @EnableExperimentalNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))

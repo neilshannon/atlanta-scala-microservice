@@ -20,7 +20,7 @@ object SpringRunner extends App with ServiceConfig {
   }
   else {
     val context: ApplicationContext = new AnnotationConfigApplicationContext(classOf[LocalGraphConfiguration])
-    val testDataService: TestDataService = context.getBean("TestDataService").asInstanceOf[TestDataService]
+    val testDataService: TestDataService = context.getBean("testDataService").asInstanceOf[TestDataService]
     testDataService.loadTestData()
   }
 }

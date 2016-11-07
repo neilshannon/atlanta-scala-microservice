@@ -13,7 +13,7 @@ import scala.collection.JavaConversions._
 import scala.io.{Codec, Source}
 
 @Service
-@Profile(Array("test", "default"))
+@Profile(Array("!cloud"))
 @Transactional(propagation = Propagation.REQUIRED)
 class TestDataService {
   private val log = LoggerFactory.getLogger(getClass)
