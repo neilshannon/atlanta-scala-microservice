@@ -1,0 +1,30 @@
+create (hs: Person {firstName: 'Homer', lastName: 'Simpson', google_id: '1'})
+create (ms: Person {firstName: 'Marge', lastName: 'Simpson', google_id: '2'})
+create (ls: Person {firstName: 'Lisa', lastName: 'Simpson', google_id: '3'})
+create (bs: Person {firstName: 'Bart', lastName: 'Simpson', google_id: '4'})
+create (mgs: Person {firstName: 'Maggie', lastName: 'Simpson', google_id: '5'})
+
+create (hs)-[:CONNECTED]->(ms)
+create (hs)-[:CONNECTED]->(ls)
+create (hs)-[:CONNECTED]->(bs)
+create (hs)-[:CONNECTED]->(mgs)
+
+create (ms)-[:CONNECTED]->(hs)
+create (ms)-[:CONNECTED]->(ls)
+create (ms)-[:CONNECTED]->(bs)
+create (ms)-[:CONNECTED]->(mgs)
+
+create (ls)-[:CONNECTED]->(hs)
+create (ls)-[:CONNECTED]->(ms)
+create (ls)-[:CONNECTED]->(bs)
+create (ls)-[:CONNECTED]->(mgs)
+
+create (bs)-[:CONNECTED]->(hs)
+create (bs)-[:CONNECTED]->(ms)
+create (bs)-[:CONNECTED]->(ls)
+create (bs)-[:CONNECTED]->(mgs)
+
+create (mgs)-[:CONNECTED]->(hs)
+create (mgs)-[:CONNECTED]->(ms)
+create (mgs)-[:CONNECTED]->(ls)
+create (mgs)-[:CONNECTED]->(bs)
