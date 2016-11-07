@@ -15,7 +15,12 @@ import scala.annotation.meta.setter
 @Configuration
 @EnableExperimentalNeo4jRepositories(Array("com.ntsdev.repository"))
 @EnableTransactionManagement
-@ComponentScan(Array("com.ntsdev.repository", "com.ntsdev.service"))
+@ComponentScan(
+  basePackageClasses = Array(
+    classOf[com.ntsdev.repository.PersonRepository],
+    classOf[com.ntsdev.service.TestDataService],
+    classOf[com.ntsdev.service.AtlantaScalaMicroservice])
+)
 @Primary
 class RemoteGraphConfiguration extends Neo4jConnectivity {
   private val log = LoggerFactory.getLogger(getClass)

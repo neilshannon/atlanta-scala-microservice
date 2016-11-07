@@ -1,11 +1,17 @@
 package com.ntsdev.run
 
 import com.ntsdev.config.{LocalGraphConfiguration, RemoteGraphConfiguration, ServiceConfig}
+import com.ntsdev.service.TestDataService
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.{AnnotationConfigApplicationContext, ComponentScan, Configuration}
 
 @Configuration
-@ComponentScan(basePackages = Array("com.ntsdev.*"))
+@ComponentScan(
+  basePackageClasses = Array(
+    classOf[com.ntsdev.repository.PersonRepository],
+    classOf[com.ntsdev.service.TestDataService],
+    classOf[com.ntsdev.service.AtlantaScalaMicroservice])
+)
 class SpringRunner
 
 object SpringRunner extends App with ServiceConfig {
@@ -14,6 +20,8 @@ object SpringRunner extends App with ServiceConfig {
   }
   else {
     val context: ApplicationContext = new AnnotationConfigApplicationContext(classOf[LocalGraphConfiguration])
+    val testDataService: TestDataService = context.getBean("TestDataService").asInstanceOf[TestDataService]
+    testDataService.loadTestData()
   }
 }
 

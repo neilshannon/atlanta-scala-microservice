@@ -1,6 +1,7 @@
 package com.ntsdev.config
 
 import com.ntsdev.neo4j.Neo4jConnectivity
+import com.ntsdev.service.TestDataService
 import org.neo4j.ogm.session.{Session, SessionFactory}
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation._
@@ -8,11 +9,16 @@ import org.springframework.data.neo4j.repository.config.EnableExperimentalNeo4jR
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
-@Profile(Array("default"))
+@Profile(Array("default", "test"))
 @Configuration
 @EnableTransactionManagement
 @EnableExperimentalNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))
-@ComponentScan(basePackages = Array("com.ntsdev.repository", "com.ntsdev.service"))
+@ComponentScan(
+  basePackageClasses = Array(
+    classOf[com.ntsdev.repository.PersonRepository],
+    classOf[com.ntsdev.service.TestDataService],
+    classOf[com.ntsdev.service.AtlantaScalaMicroservice])
+  )
 @Primary
 class LocalGraphConfiguration extends Neo4jConnectivity {
   val log = LoggerFactory.getLogger(getClass)
@@ -39,6 +45,11 @@ class LocalGraphConfiguration extends Neo4jConnectivity {
   @Primary
   def transactionManager(): Neo4jTransactionManager = {
     new Neo4jTransactionManager(getSessionFactory)
+  }
+
+  @Bean
+  def testDataService(): TestDataService = {
+    new TestDataService()
   }
 
 }

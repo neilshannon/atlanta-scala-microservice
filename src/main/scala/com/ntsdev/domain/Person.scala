@@ -1,40 +1,39 @@
 package com.ntsdev.domain
 
-import org.neo4j.ogm.annotation.{GraphId, NodeEntity, Relationship}
+import org.neo4j.ogm.annotation.{NodeEntity, Relationship}
 
-import scala.annotation.meta.setter
+import scala.collection.JavaConversions._
 
 @NodeEntity
-case class Person(
-                   @(GraphId @setter) var id: java.lang.Long = 0L,
-                   firstName: String,
-                   lastName: String,
-                   headline: String,
-                   linkedin_id: String,
-                   industry: String,
-                   pictureUrl: Option[String],
-                   location: Location,
-                   positions: Option[Array[Position]] = None,
-                   @Relationship(`type`="CONNECTED_TO") connections: Set[Person]
-                 ) {
+case class Person (
+                   @GraphId var id: java.lang.Long,
+                   var firstName: String,
+                   var lastName: String,
+                   var google_id: String,
+                   @Relationship(`type`="CONNECTED") var contacts: java.util.Set[Person]
+                 ){
 
-  def toPersonWithCompany: PersonWithCompany = {
-    val position = currentPosition
-    PersonWithCompany(
-      firstName,
-      lastName,
-      headline,
-      linkedin_id,
-      industry,
-      pictureUrl.getOrElse(""),
-      location.name,
-      position.map(_.title).getOrElse(""),
-      position.map(_.company.name).getOrElse(""),
-      position.map(_.company.linkedin_id).getOrElse("")
-    )
+  def this() = this(null, null, null, null, Set.empty[Person]) //this is for Spring Data Neo4j
+
+  override def toString: String = {
+    s"id: [$id], " +
+    s"firstName: [$firstName], " +
+    s"lastName: [$lastName], " +
+    s"connections: [${contacts.map(_.firstName).mkString(",")}]"
   }
 
-  def currentPosition = {
-    positions.map { actualPositions => actualPositions.filter(_.isCurrent).head }
+  @Override
+  override def equals(obj: scala.Any): Boolean = {
+    obj match {
+      case x: Person =>
+        x.id == this.id
+      case _ =>
+        false
+    }
+  }
+
+  @Override
+  override def hashCode(): Int = {
+    if(id != null) id.hashCode() else 0
   }
 }
