@@ -1,5 +1,7 @@
 enablePlugins(JavaAppPackaging)
 
+enablePlugins(UniversalPlugin)
+
 name := "atlanta-scala-microservice"
 organization := "com.ntsdev"
 version := "1.0"
@@ -42,7 +44,7 @@ libraryDependencies ++= {
     "org.neo4j"                % "neo4j-ogm-compiler" % neo4jOgmV,
     "org.neo4j"                % "neo4j-ogm-bolt-driver" % neo4jOgmV,
     "org.neo4j"                % "neo4j-ogm-embedded-driver" % neo4jOgmV,
-    "org.neo4j"                % "neo4j" % "3.0.3",
+    "org.neo4j"                % "neo4j" % "3.0.6",
     "org.json4s"               % "json4s-native_2.11" % "3.4.2",
     "com.typesafe"             % "config" % "1.3.0",
     "ch.qos.logback"           % "logback-classic" % "1.1.3",

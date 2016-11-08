@@ -1,7 +1,8 @@
 ---
 applications:
 - name: atlanta-scala-microservice
-  path: target/scala-2.11/atlanta-scala-microservice-assembly-1.0.jar
+  path: /target/universal/atlanta-scala-microservice-1.0.zip
+  command: atlanta-scala-microservice
   memory: 2048M
   timeout: 180
   disk_quota: 2G

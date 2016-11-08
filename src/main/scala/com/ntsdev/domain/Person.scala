@@ -1,14 +1,14 @@
 package com.ntsdev.domain
 
-import com.ntsdev.domain.Person.GraphId
-import org.neo4j.ogm.annotation.{NodeEntity, Relationship}
+import org.neo4j.ogm.annotation.{GraphId, NodeEntity, Relationship}
+import org.springframework.data.annotation.PersistenceConstructor
 
-import scala.annotation.meta.field
+import scala.annotation.meta.setter
 import scala.collection.JavaConversions._
 
 @NodeEntity
-case class Person (
-                   @GraphId var id: java.lang.Long,
+case class Person @PersistenceConstructor()(
+                   @(GraphId @setter) var id: java.lang.Long,
                    var firstName: String,
                    var lastName: String,
                    var google_id: String,
@@ -38,9 +38,4 @@ case class Person (
   override def hashCode(): Int = {
     if(id != null) id.hashCode() else 0
   }
-}
-
-object Person extends Person {
-  type GraphId = org.neo4j.ogm.annotation.GraphId @field
-  type Id = org.springframework.data.annotation.Id @field
 }
