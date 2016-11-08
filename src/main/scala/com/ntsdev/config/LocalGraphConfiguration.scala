@@ -1,8 +1,7 @@
 package com.ntsdev.config
 
-import com.ntsdev.neo4j.Neo4jConnectivity
 import com.ntsdev.service.TestDataService
-import org.neo4j.ogm.session.{Session, SessionFactory}
+import org.neo4j.ogm.session.SessionFactory
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation._
 import org.springframework.data.neo4j.repository.config.EnableExperimentalNeo4jRepositories
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
     classOf[com.ntsdev.service.AtlantaScalaMicroservice])
   )
 @Primary
-class LocalGraphConfiguration extends Neo4jConnectivity {
+class LocalGraphConfiguration {
   val log = LoggerFactory.getLogger(getClass)
 
   @Bean
@@ -35,13 +34,11 @@ class LocalGraphConfiguration extends Neo4jConnectivity {
   }
 
   @Bean
-  @Primary
   def getSessionFactory: SessionFactory = {
     new SessionFactory(getConfiguration, "com.ntsdev.domain"){}
   }
 
   @Bean
-  @Primary
   def transactionManager(): Neo4jTransactionManager = {
     new Neo4jTransactionManager(getSessionFactory)
   }

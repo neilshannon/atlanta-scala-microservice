@@ -22,11 +22,10 @@ class ServiceSpec extends FlatSpec with Matchers with ScalatestRouteTest with Mo
     testDataService.loadTestData()
     
     microservice = context.getBean("atlantaScalaMicroservice").asInstanceOf[AtlantaScalaMicroservice]
-    microservice.config = testConfig
     microservice.logger = NoLogging
   }
 
-  "Service" should "return 200 for the root context" in {
+  "Service" should "return 200 for root context" in {
     Get() ~> microservice.routes ~> check {
       status shouldBe OK
     }

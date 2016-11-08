@@ -6,24 +6,22 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import akka.http.scaladsl.server.Directives
 import akka.stream.ActorMaterializer
-import com.ntsdev.config.ServiceConfig
 import com.ntsdev.domain.Person
 import com.ntsdev.repository.PersonRepository
+import com.typesafe.config.ConfigFactory
 import de.heikoseeberger.akkahttpjson4s.Json4sSupport
 import org.json4s.{DefaultFormats, Formats, native}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import scala.annotation.meta.setter
 import scala.collection.Iterable
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 
 @Service
-class AtlantaScalaMicroservice extends Directives with ServiceConfig with Json4sSupport {
-  private val interface: String = config.getString("http.interface")
-  private val port: Int = config.getInt("http.port")
-
+class AtlantaScalaMicroservice extends Directives with Json4sSupport {
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
   implicit val executor = system.dispatcher
@@ -34,8 +32,12 @@ class AtlantaScalaMicroservice extends Directives with ServiceConfig with Json4s
   var logger = Logging(system, getClass)
   var binding: Future[Http.ServerBinding] = _
 
-  @Autowired
-  val personRepository: PersonRepository = null
+  @(Autowired @setter)
+  var personRepository: PersonRepository = _
+
+  val config = ConfigFactory.systemEnvironment().withFallback(ConfigFactory.load())
+  private val interface: String = config.getString("http.interface")
+  private val port: Int = config.getInt("http.port")
 
   val jsonRoutes = {
     logRequestResult("atlanta-scala-microservice") {

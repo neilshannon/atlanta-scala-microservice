@@ -29,15 +29,15 @@ $ sbt
 
 ## cloud runtime
 #### environment variables
-| variable name  | variable value |
-|----------------|----------------|
-| neo4j.host     | host for neo4j server |
-| neo4j.webPort  | REST API port for neo4j |
-| neo4j.boltPort | binary Bolt port for neo4j |
-| neo4j.username | neo4j username |
-| neo4j.password | neo4j password |
-| http.host      | http host for microservice |
-| http.port      | http port for microservice |
+| variable name  | variable value | default |
+|----------------|----------------|---------|
+| neo4j-host     | host for neo4j server | 0.0.0.0 |
+| neo4j-webPort  | REST API port for neo4j | 7474 |
+| neo4j-boltPort | binary Bolt port for neo4j | 7687 |
+| neo4j-username | neo4j username | neo4j |
+| neo4j-password | neo4j password | blank |
+| http-host      | http host for microservice | 0.0.0.0 |
+| http-port      | http port for microservice | 9000 |
 
 #### setting environment variables in CloudFoundry
 
