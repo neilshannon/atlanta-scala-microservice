@@ -2,7 +2,7 @@
 applications:
 - name: atlanta-scala-microservice
   path: target/universal/atlanta-scala-microservice-1.0.zip
-  command: $HOME/atlanta-scala-microservice-1.0/bin/atlanta-scala-microservice -java_home /home/vcap/app/.java-buildpack/open_jdk_jre
+  command: $HOME/atlanta-scala-microservice-1.0/bin/atlanta-scala-microservice -java_home $HOME/.java-buildpack/open_jdk_jre/ -no-version-check
   memory: 2048M
   timeout: 180
   disk_quota: 2G
