@@ -45,13 +45,13 @@ class RemoteGraphConfiguration {
   }
 
   @Bean
-  def getSessionFactory: SessionFactory = {
-    new SessionFactory(getNeo4jConfig, "com.ntsdev.domain")
+  def getSessionFactory(neo4jConfig: org.neo4j.ogm.config.Configuration): SessionFactory = {
+    new SessionFactory(neo4jConfig, "com.ntsdev.domain")
   }
 
   @Bean
-  def transactionManager(): Neo4jTransactionManager = {
-    new Neo4jTransactionManager(getSessionFactory)
+  def transactionManager(sessionFactory: SessionFactory): Neo4jTransactionManager = {
+    new Neo4jTransactionManager(sessionFactory)
   }
 
   private def buildGraphConfig(URI: String): NeoConfig = {

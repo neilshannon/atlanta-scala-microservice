@@ -25,7 +25,7 @@ class LocalGraphConfiguration {
 
   @Bean
   @Primary
-  def getConfiguration: org.neo4j.ogm.config.Configuration = {
+  def getNeo4jConfig: org.neo4j.ogm.config.Configuration = {
     val config = new org.neo4j.ogm.config.Configuration()
     config
       .driverConfiguration()
@@ -36,13 +36,13 @@ class LocalGraphConfiguration {
   }
 
   @Bean
-  def getSessionFactory: SessionFactory = {
-    new SessionFactory(getConfiguration, "com.ntsdev.domain"){}
+  def getSessionFactory(neo4jConfig: org.neo4j.ogm.config.Configuration): SessionFactory = {
+    new SessionFactory(neo4jConfig, "com.ntsdev.domain"){}
   }
 
   @Bean
-  def transactionManager(): Neo4jTransactionManager = {
-    new Neo4jTransactionManager(getSessionFactory)
+  def transactionManager(sessionFactory: SessionFactory): Neo4jTransactionManager = {
+    new Neo4jTransactionManager(sessionFactory)
   }
 
   @Bean
