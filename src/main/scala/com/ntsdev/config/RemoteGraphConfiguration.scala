@@ -17,7 +17,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement
 @ComponentScan(
   basePackageClasses = Array(
-    classOf[com.ntsdev.service.AtlantaScalaMicroservice])
+    classOf[com.ntsdev.domain.Person],
+    classOf[com.ntsdev.service.AtlantaScalaMicroservice]
+  )
 )
 @Primary
 class RemoteGraphConfiguration {

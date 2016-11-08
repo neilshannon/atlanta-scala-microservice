@@ -1,7 +1,9 @@
 package com.ntsdev.domain
 
+import com.ntsdev.domain.Person.GraphId
 import org.neo4j.ogm.annotation.{NodeEntity, Relationship}
 
+import scala.annotation.meta.field
 import scala.collection.JavaConversions._
 
 @NodeEntity
@@ -36,4 +38,9 @@ case class Person (
   override def hashCode(): Int = {
     if(id != null) id.hashCode() else 0
   }
+}
+
+object Person extends Person {
+  type GraphId = org.neo4j.ogm.annotation.GraphId @field
+  type Id = org.springframework.data.annotation.Id @field
 }

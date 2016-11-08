@@ -14,9 +14,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableExperimentalNeo4jRepositories(basePackages = Array("com.ntsdev.repository"))
 @ComponentScan(
   basePackageClasses = Array(
+    classOf[com.ntsdev.domain.Person],
     classOf[com.ntsdev.service.TestDataService],
-    classOf[com.ntsdev.service.AtlantaScalaMicroservice])
+    classOf[com.ntsdev.service.AtlantaScalaMicroservice]
   )
+)
 @Primary
 class LocalGraphConfiguration {
   val log = LoggerFactory.getLogger(getClass)
