@@ -2,7 +2,7 @@
 applications:
 - name: atlanta-scala-microservice
   path: target/universal/atlanta-scala-microservice-1.0.zip
-  command:  $HOME/atlanta-scala-microservice-1.0/bin/atlanta-scala-microservice
+  command: export JAVA_HOME=/home/vcap/app/.java-buildpack/open_jdk_jre/bin/java; $HOME/atlanta-scala-microservice-1.0/bin/atlanta-scala-microservice
   memory: 2048M
   timeout: 180
   disk_quota: 2G
@@ -10,4 +10,3 @@ applications:
     NEW_RELIC_LOG: stdout
     SPRING_PROFILES_ACTIVE: cloud
     JAVA_OPTS: -Dspring.profiles.active=cloud
-    JAVA_HOME: $HOME/.java-buildpack/open_jdk_jre
