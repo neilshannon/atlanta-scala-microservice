@@ -41,4 +41,4 @@ $ sbt
 
 #### setting environment variables in CloudFoundry
 
-`cf set-env atlanta-scala-microservice neo4j.host localhost`
+`cf set-env atlanta-scala-microservice neo4j-host localhost`
