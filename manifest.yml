@@ -10,3 +10,4 @@ applications:
     NEW_RELIC_LOG: stdout
     SPRING_PROFILES_ACTIVE: cloud
     JAVA_OPTS: -Dspring.profiles.active=cloud
+    JAVA_HOME: $HOME/.java-buildpack/open_jdk_jre
