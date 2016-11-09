@@ -4,7 +4,7 @@ enablePlugins(UniversalPlugin)
 
 name := "atlanta-scala-microservice"
 organization := "com.ntsdev"
-version := "1.0"
+version := "1.0.0"
 scalaVersion := "2.11.8"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
@@ -15,8 +15,12 @@ resolvers ++= Seq(
   "JCenter" at "https://jcenter.bintray.com/",
   "Spring Maven" at "http://repo.spring.io/libs-release",
   "Spring Snapshots" at "http://repo.spring.io/libs-snapshot",
-  "Neo4j Maven Snapshots" at "http://m2.neo4j.org/content/repositories/snapshots"
+  "Neo4j Maven Snapshots" at "http://m2.neo4j.org/content/repositories/snapshots",
+  "Artifactory" at "https://maven.artifactory.homedepot.com/artifactory/libs-release-local/"
 )
+
+publishTo := Some("Artifactory Realm" at "https://maven.artifactory.homedepot.com/artifactory/libs-release-local")
+credentials += Credentials("Artifactory Realm", "localhost", sys.env.getOrElse("artifactory_user", ""), sys.env.getOrElse("artifactory_pass", ""))
 
 resolvers += Resolver.jcenterRepo
 
