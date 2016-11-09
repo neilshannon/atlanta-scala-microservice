@@ -20,7 +20,7 @@ resolvers ++= Seq(
 )
 
 publishTo := Some("Artifactory Realm" at "https://maven.artifactory.homedepot.com/artifactory/libs-release-local")
-credentials += Credentials("Artifactory Realm", "localhost", sys.env.getOrElse("artifactory_user", ""), sys.env.getOrElse("artifactory_pass", ""))
+credentials += Credentials("Artifactory Realm", "https://maven.artifactory.homedepot.com/artifactory/libs-release-local", sys.env.getOrElse("artifactory_user", ""), sys.env.getOrElse("artifactory_pass", ""))
 
 resolvers += Resolver.jcenterRepo
 
