@@ -1,9 +1,11 @@
 package com.ntsdev.service
 
+import java.nio.file.{Files, Path, Paths}
+
 import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.model.{HttpRequest, StatusCodes, Uri}
 import akka.http.scaladsl.server.Directives
 import akka.stream.ActorMaterializer
 import com.ntsdev.domain.Person
@@ -39,6 +41,9 @@ class AtlantaScalaMicroservice extends Directives with Json4sSupport {
   private val interface: String = config.getString("http.interface")
   private val port: Int = config.getInt("http.port")
 
+  val staticContentDir = calculateStaticPath()
+  val staticPath = "site"
+
   val jsonRoutes = {
     logRequestResult("atlanta-scala-microservice") {
       get {
@@ -51,15 +56,24 @@ class AtlantaScalaMicroservice extends Directives with Json4sSupport {
     }
   }
 
-  val htmlRoutes = {
-    get {
-      pathSingleSlash {
-        complete(HttpEntity(ContentTypes.`text/html(UTF-8)`,"<html><body>Login Page</body></html>"))
+  val htmlRoutes =
+    pathPrefix(staticPath) {
+      entity(as[HttpRequest]) { requestData =>
+        val fullPath = requestData.uri.path
+        encodeResponse {
+          if (Files.exists(staticContentDir.resolve(fullPath.toString().replaceFirst(s"/$staticPath/", "")))) {
+            getFromBrowseableDirectory(staticContentDir.toString)
+          } else {
+            getFromResourceDirectory("site")
+          }
+        }
       }
+    } ~
+    pathSingleSlash {
+      redirect(Uri("/site/index.html"), StatusCodes.Found)
     }
-  }
 
-  val routes = jsonRoutes ~ htmlRoutes
+  val routes = htmlRoutes ~ jsonRoutes
 
   logger.info("Starting http server...")
 
@@ -82,6 +96,11 @@ class AtlantaScalaMicroservice extends Directives with Json4sSupport {
       val subContacts: Set[Person] = personContacts.map(contact => contact.copy(contacts = Set.empty[Person]))
       rootPerson.copy(contacts = subContacts)
     })
+  }
+
+  private def calculateStaticPath(): Path ={
+    val workingDirectory = System.getProperty("user.dir")
+    Paths.get(workingDirectory + "/site")
   }
 }
 
