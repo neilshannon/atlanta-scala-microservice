@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>Login with Facebook</title>
+        <meta charset="UTF-8">
+        <script type="text/javascript" src="/site/js/lodash.min.js"></script>
+    </head>
+    <body>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '307923396261047',
+                    xfbml      : true,
+                    version    : 'v2.8'
+                });
+                FB.AppEvents.logPageView();
+            };
+
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            // This is called with the results from from FB.getLoginStatus().
+            function statusChangeCallback(response) {
+                console.log('statusChangeCallback');
+                console.log(response);
+                if (response.status === 'connected') {
+                    // Logged into your app and Facebook.
+                    testAPI();
+                } else if (response.status === 'not_authorized') {
+                    // The person is logged into Facebook, but not your app.
+                    document.getElementById('status').innerHTML = 'Please log into Neo4j Connections Export.';
+                } else {
+                    // The person is not logged into Facebook, so we're not sure if
+                    // they are logged into this app or not.
+                    document.getElementById('status').innerHTML = 'Please log into Facebook.';
+                }
+            }
+
+            function checkLoginState() {
+                FB.getLoginStatus(function(response) {
+                    statusChangeCallback(response);
+                });
+            }
+
+            function testAPI() {
+                console.log('Welcome!  Fetching your information.... ');
+                FB.api('/me?fields=id,name,friends', function(response) {
+                    console.log('Successful login for: ' + response.name);
+                    var friends = _.map(response.friends.data, function(friend){ return friend.name});
+                    var friendsString = _.join(friends, ", ");
+                    document.getElementById('status').innerHTML =
+                        'Thanks for logging in, ' + response.name + '! Your friends: [' + friendsString + "]";
+                });
+            }
+        </script>
+
+        <fb:login-button scope="public_profile,email,user_friends" onlogin="checkLoginState();"></fb:login-button>
+
+        <div id="status">
+        </div>
+
+    </body>
+</html>
