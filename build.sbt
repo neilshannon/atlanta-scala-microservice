@@ -4,7 +4,7 @@ enablePlugins(UniversalPlugin)
 
 name := "atlanta-scala-microservice"
 organization := "com.ntsdev"
-version := "1.0.1"
+version := "1.0.2"
 scalaVersion := "2.11.8"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
