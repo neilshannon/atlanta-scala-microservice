@@ -20,6 +20,13 @@ $ sbt
 > test
 ```
 
+Execute tests with code coverage and report
+
+```
+$ sbt 
+> clean coverage test coverageReport
+```
+
 ### build deployment assembly
 
 ```

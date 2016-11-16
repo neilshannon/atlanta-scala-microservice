@@ -25,19 +25,24 @@ class ServiceSpec extends FlatSpec with Matchers with ScalatestRouteTest with Mo
   }
 
   "Service" should "return redirect to index.html at root context" in {
-    Get() ~> httpService.routes ~> check {
+    Get.apply() ~> httpService.routes ~> check {
       status shouldBe Found
       val locationHeader = response.headers.find(_.name() == "Location")
       locationHeader.foreach(_.value() shouldBe "/site/index.html")
     }
   }
 
+  "Service" should "return a js file when requested" in {
+    Get.apply("/site/js/lodash.min.js") ~> httpService.routes ~> check {
+      status shouldBe OK
+    }
+  }
+
   "Service" should "get a list of all persons" in {
-    Get("/person") ~> httpService.routes ~> check {
+    Get.apply("/person") ~> httpService.routes ~> check {
       status shouldBe OK
       contentType shouldBe ContentTypes.`application/json`
-      val responseString = responseAs[String]
-      responseString shouldBe
+      responseAs[String] shouldBe
         """[{"id":0,"firstName":"Homer","lastName":"Simpson","google_id":"1","contacts":[{"id":1,"firstName":"Marge","lastName":"Simpson","google_id":"2","contacts":[]},{"id":2,"firstName":"Lisa","lastName":"Simpson","google_id":"3","contacts":[]},{"id":3,"firstName":"Bart","lastName":"Simpson","google_id":"4","contacts":[]},{"id":4,"firstName":"Maggie","lastName":"Simpson","google_id":"5","contacts":[]}]},{"id":1,"firstName":"Marge","lastName":"Simpson","google_id":"2","contacts":[{"id":0,"firstName":"Homer","lastName":"Simpson","google_id":"1","contacts":[]},{"id":2,"firstName":"Lisa","lastName":"Simpson","google_id":"3","contacts":[]},{"id":3,"firstName":"Bart","lastName":"Simpson","google_id":"4","contacts":[]},{"id":4,"firstName":"Maggie","lastName":"Simpson","google_id":"5","contacts":[]}]},{"id":2,"firstName":"Lisa","lastName":"Simpson","google_id":"3","contacts":[{"id":0,"firstName":"Homer","lastName":"Simpson","google_id":"1","contacts":[]},{"id":1,"firstName":"Marge","lastName":"Simpson","google_id":"2","contacts":[]},{"id":3,"firstName":"Bart","lastName":"Simpson","google_id":"4","contacts":[]},{"id":4,"firstName":"Maggie","lastName":"Simpson","google_id":"5","contacts":[]}]},{"id":3,"firstName":"Bart","lastName":"Simpson","google_id":"4","contacts":[{"id":0,"firstName":"Homer","lastName":"Simpson","google_id":"1","contacts":[]},{"id":1,"firstName":"Marge","lastName":"Simpson","google_id":"2","contacts":[]},{"id":2,"firstName":"Lisa","lastName":"Simpson","google_id":"3","contacts":[]},{"id":4,"firstName":"Maggie","lastName":"Simpson","google_id":"5","contacts":[]}]},{"id":4,"firstName":"Maggie","lastName":"Simpson","google_id":"5","contacts":[{"id":0,"firstName":"Homer","lastName":"Simpson","google_id":"1","contacts":[]},{"id":1,"firstName":"Marge","lastName":"Simpson","google_id":"2","contacts":[]},{"id":2,"firstName":"Lisa","lastName":"Simpson","google_id":"3","contacts":[]},{"id":3,"firstName":"Bart","lastName":"Simpson","google_id":"4","contacts":[]}]}]""".stripMargin
     }
   }

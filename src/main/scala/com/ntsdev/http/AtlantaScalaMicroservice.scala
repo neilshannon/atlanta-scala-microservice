@@ -30,16 +30,12 @@ class AtlantaScalaMicroservice extends Directives with Json4sSupport with Enviro
 
   def routes = htmlRoutes.route ~ jsonRoutes.route
 
-  var binding: Future[Http.ServerBinding] = _
+  logger.info("Starting http server...")
 
-  if(null == binding){
-    logger.info("Starting http server...")
-
-    binding = Http().bindAndHandle(routes, interface, port).flatMap(binding => {
-      logger.info(s"Listening on port [$port] interface [$interface]")
-      Future.successful(binding)
-    })
-  }
+  Http().bindAndHandle(routes, interface, port).flatMap(binding => {
+    logger.info(s"Listening on port [$port] interface [$interface]")
+    Future.successful(binding)
+  })
 
 }
 

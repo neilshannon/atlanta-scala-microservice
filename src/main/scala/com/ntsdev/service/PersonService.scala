@@ -21,9 +21,13 @@ class PersonService {
   def peopleWithContactsDepthOne: Iterable[Person] = {
     val people: Iterable[Person] = personRepository.findConnections
 
+    def clearConnections(contact: Person) = {
+      contact.copy(contacts = Set.empty[Person])
+    }
+
     people.map(rootPerson => {
       val personContacts: Set[Person] = rootPerson.contacts.toSet
-      val subContacts: Set[Person] = personContacts.map(contact => contact.copy(contacts = Set.empty[Person]))
+      val subContacts: Set[Person] = personContacts.map(clearConnections)
       rootPerson.copy(contacts = subContacts)
     })
   }
