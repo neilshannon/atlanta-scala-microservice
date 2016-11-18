@@ -19,9 +19,9 @@ trait EnvironmentConfig {
   val port = config.getInt("http.port")
 
   val twitterConfig = config.getConfig("twitter")
-  val consumerKey = twitterConfig.getString("consumerKey")
-  val consumerSecret = twitterConfig.getString("consumerSecret")
-  val accessToken = twitterConfig.getString("accessToken")
-  val accessSecret = twitterConfig.getString("accessSecret")
+  val consumerKey = twitterConfig.getString("consumer.key")
+  val consumerSecret = twitterConfig.getString("consumer.secret")
+  val defaultAccessTokenKey = twitterConfig.getString("access.key")
+  val defaultAccessSecret = twitterConfig.getString("access.secret")
 
 }

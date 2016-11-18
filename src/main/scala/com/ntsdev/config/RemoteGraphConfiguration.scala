@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
   basePackageClasses = Array(
     classOf[com.ntsdev.domain.Person],
     classOf[com.ntsdev.service.PersonService],
-    classOf[com.ntsdev.http.routes.JsonRoutes],
+    classOf[com.ntsdev.service.TwitterService],
     classOf[com.ntsdev.http.AtlantaScalaMicroservice]
   )
 )
