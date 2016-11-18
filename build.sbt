@@ -31,7 +31,7 @@ libraryDependencies ++= {
   Seq(
     "com.typesafe.akka"       %% "akka-http-core" % akkaV,
     "com.typesafe.akka"       %% "akka-http-experimental" % akkaV,
-    "de.heikoseeberger"        % "akka-http-json4s_2.11" % "1.10.1",
+    "com.typesafe.akka"       %% "akka-http-spray-json-experimental" % akkaV,
     "com.typesafe.akka"       %% "akka-http-testkit" % akkaV,
     "org.springframework"      % "spring-core" % springV,
     "org.springframework"      % "spring-aop" % springV,
@@ -46,7 +46,6 @@ libraryDependencies ++= {
     "org.neo4j"                % "neo4j-ogm-bolt-driver" % neo4jOgmV,
     "org.neo4j"                % "neo4j-ogm-embedded-driver" % neo4jOgmV,
     "org.neo4j"                % "neo4j" % "3.0.6",
-    "org.json4s"               % "json4s-native_2.11" % "3.4.2",
     "com.typesafe"             % "config" % "1.3.0",
     "ch.qos.logback"           % "logback-classic" % "1.1.3",
     "com.danielasfregola"     %% "twitter4s" % "2.0",

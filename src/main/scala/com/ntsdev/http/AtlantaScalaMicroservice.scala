@@ -3,33 +3,35 @@ package com.ntsdev.http
 import akka.actor.ActorSystem
 import akka.event.Logging
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.{Directives, Route}
+import akka.http.scaladsl.server.Directives
 import akka.stream.ActorMaterializer
 import com.ntsdev.config.EnvironmentConfig
 import com.ntsdev.http.routes.{HtmlRoutes, JsonRoutes, TwitterRoutes}
 import com.ntsdev.service.{PersonService, TwitterService}
-import de.heikoseeberger.akkahttpjson4s.Json4sSupport
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import scala.annotation.meta.setter
 import scala.concurrent.{ExecutionContext, Future}
 
 
 @Service
-class AtlantaScalaMicroservice extends Directives with Json4sSupport with EnvironmentConfig {
+class AtlantaScalaMicroservice extends Directives with EnvironmentConfig {
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
   implicit val executor: ExecutionContext = system.dispatcher
 
+  var _personService: PersonService = _
+
+  private val logger = Logging(system, getClass)
+  private val htmlRoutes = new HtmlRoutes()
+  private val jsonRoutes = new JsonRoutes(_personService)
+  private val twitterRoutes = new TwitterRoutes(new TwitterService)
+
   @Autowired
-  val personService: PersonService = null
-
-  val logger = Logging(system, getClass)
-
-  private def htmlRoutes = new HtmlRoutes()
-  private def jsonRoutes = new JsonRoutes(personService)
-  private def twitterRoutes = new TwitterRoutes(new TwitterService)
+  def personService_=(service: PersonService){ //TODO: fix spring lifecycle ordering
+    _personService = service
+    jsonRoutes.personService = service
+  }
 
   def routes = {
     htmlRoutes.route ~ jsonRoutes.route ~ twitterRoutes.route
@@ -37,10 +39,11 @@ class AtlantaScalaMicroservice extends Directives with Json4sSupport with Enviro
 
   logger.info("Starting http server...")
 
-  Http().bindAndHandle(Route.handlerFlow(routes), interface, port).flatMap(binding => {
+  Http().bindAndHandle(routes, interface, port).flatMap(binding => {
     logger.info(s"Listening on port [$port] interface [$interface]")
     Future.successful(binding)
   })
+
 
 }
 

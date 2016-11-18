@@ -1,8 +1,8 @@
-create (hs: Person {firstName: 'Homer', lastName: 'Simpson', google_id: '1'})
-create (ms: Person {firstName: 'Marge', lastName: 'Simpson', google_id: '2'})
-create (ls: Person {firstName: 'Lisa', lastName: 'Simpson', google_id: '3'})
-create (bs: Person {firstName: 'Bart', lastName: 'Simpson', google_id: '4'})
-create (mgs: Person {firstName: 'Maggie', lastName: 'Simpson', google_id: '5'})
+create (hs: Person {firstName: 'Homer', lastName: 'Simpson', twitter_id: '1'})
+create (ms: Person {firstName: 'Marge', lastName: 'Simpson', twitter_id: '2'})
+create (ls: Person {firstName: 'Lisa', lastName: 'Simpson', twitter_id: '3'})
+create (bs: Person {firstName: 'Bart', lastName: 'Simpson', twitter_id: '4'})
+create (mgs: Person {firstName: 'Maggie', lastName: 'Simpson', twitter_id: '5'})
 
 create (hs)-[:CONNECTED]->(ms)
 create (hs)-[:CONNECTED]->(ls)
