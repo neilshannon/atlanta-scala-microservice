@@ -21,8 +21,6 @@ resolvers ++= Seq(
 publishTo := Some("Artifactory Realm" at "https://maven.artifactory.homedepot.com/artifactory/libs-snapshots-local")
 credentials += Credentials("Artifactory Realm", "maven.artifactory.homedepot.com", sys.env.getOrElse("artifactory_user", ""), sys.env.getOrElse("artifactory_password", ""))
 
-resolvers += Resolver.jcenterRepo
-
 libraryDependencies ++= {
   val akkaV       = "2.4.11"
   val scalaTestV  = "2.2.6"
