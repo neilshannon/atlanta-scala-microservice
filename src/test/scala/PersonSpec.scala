@@ -6,11 +6,11 @@ import scala.collection.JavaConversions._
 class PersonSpec extends FlatSpec with Matchers with MockitoSugar {
 
   val emptyContacts = Set.empty[Person]
-  val neil = Person(id = 1234L, firstName = "Neil", lastName = "Shannon", google_id = "1234", contacts = emptyContacts)
+  val neil = Person(id = 1234L, firstName = "Neil", lastName = "Shannon", twitter_id = "1234", contacts = emptyContacts)
 
 
   "equals method" should "match on google_id" in {
-    val anotherNeil = Person(id = 1234L, firstName = "Neil", lastName = "Shannon", google_id = "1234", contacts = emptyContacts)
+    val anotherNeil = Person(id = 1234L, firstName = "Neil", lastName = "Shannon", twitter_id = "1234", contacts = emptyContacts)
     neil should equal(anotherNeil)
   }
 

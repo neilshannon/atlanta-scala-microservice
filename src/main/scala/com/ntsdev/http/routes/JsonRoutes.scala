@@ -1,17 +1,14 @@
 package com.ntsdev.http.routes
 
 import akka.http.scaladsl.server.Directives
+import com.danielasfregola.twitter4s.http.unmarshalling.{JsonSupport => Twitter4sJsonSupport}
 import com.ntsdev.domain.Person
+import com.ntsdev.http.marshalling.JsonSupport
 import com.ntsdev.service.PersonService
-import de.heikoseeberger.akkahttpjson4s.Json4sSupport
-import org.json4s.{DefaultFormats, Formats, native}
 
 import scala.concurrent.ExecutionContext
 
-class JsonRoutes(val personService: PersonService)(implicit executionContext: ExecutionContext) extends Directives with Json4sSupport {
-
-  implicit val serialization = native.Serialization
-  implicit val jsonFormats: Formats = DefaultFormats
+class JsonRoutes(var personService: PersonService)(implicit executionContext: ExecutionContext) extends Directives with Twitter4sJsonSupport with JsonSupport {
 
   val route = {
     logRequestResult("atlanta-scala-microservice") {

@@ -8,11 +8,11 @@ import scala.collection.JavaConversions._
 
 @NodeEntity
 case class Person @PersistenceConstructor()(
-                   @(GraphId @setter) var id: java.lang.Long,
-                   var firstName: String,
-                   var lastName: String,
-                   var google_id: String,
-                   @Relationship(`type`="CONNECTED") var contacts: java.util.Set[Person]
+                                             @(GraphId @setter) var id: java.lang.Long,
+                                             var firstName: String,
+                                             var lastName: String,
+                                             var twitter_id: String,
+                                             @Relationship(`type`="CONNECTED") var contacts: java.util.Set[Person]
                  ){
 
   def this() = this(null, null, null, null, Set.empty[Person]) //this is for Spring Data Neo4j
