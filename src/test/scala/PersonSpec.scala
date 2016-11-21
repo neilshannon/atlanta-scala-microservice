@@ -27,6 +27,4 @@ class PersonSpec extends FlatSpec with Matchers with MockitoSugar {
     neil.toString shouldEqual "id: [1234], firstName: [Neil], lastName: [Shannon], connections: []"
   }
 
-
-
 }

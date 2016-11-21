@@ -23,5 +23,6 @@ trait EnvironmentConfig {
   val consumerSecret = twitterConfig.getString("consumer.secret")
   val defaultAccessTokenKey = twitterConfig.getString("access.key")
   val defaultAccessSecret = twitterConfig.getString("access.secret")
+  val callbackUrl = twitterConfig.getString("callbackurl")
 
 }

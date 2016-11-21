@@ -2,6 +2,10 @@ package com.ntsdev.service
 
 import com.danielasfregola.twitter4s.TwitterRestClient
 import com.danielasfregola.twitter4s.entities.{AccessToken, ConsumerToken, User, Users}
+import com.github.scribejava.apis.TwitterApi
+import com.github.scribejava.core.builder.ServiceBuilder
+import com.github.scribejava.core.model.OAuth1RequestToken
+import com.github.scribejava.core.oauth.OAuth10aService
 import com.ntsdev.config.EnvironmentConfig
 import com.ntsdev.domain.Person
 
@@ -12,17 +16,29 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
 
   private val consumerToken = ConsumerToken(consumerKey, consumerSecret)
 
-  private def buildClient(accessToken: String = defaultAccessTokenKey) = {
-    val userToken = AccessToken(accessToken, defaultAccessSecret)
-    new TwitterRestClient(consumerToken, userToken)
+  def requestTokenService: OAuth10aService = {
+    new ServiceBuilder()
+      .apiKey(consumerKey)
+      .apiSecret(consumerSecret)
+      .callback(callbackUrl)
+      .build(TwitterApi.instance())
   }
 
-  def getContacts(accessToken: String): Future[Seq[Person]] = {
+  def getAccessToken: AccessToken = {
+    //TODO get request token, bind access token in cookie
+    AccessToken(defaultAccessTokenKey, defaultAccessSecret)
+  }
+
+  def getRequestToken: OAuth1RequestToken = {
+    requestTokenService.getRequestToken //todo async
+  }
+
+  def getContacts(accessToken: AccessToken): Future[Seq[Person]] = {
     usersToPersons(getFriends(accessToken))
   }
 
-  def getFriends(accessToken: String): Future[Users] = {
-    val client = buildClient()
+  def getFriends(accessToken: AccessToken): Future[Users] = {
+    val client = buildClient
     val usersFuture = client.getFriendsForUser("ntshannon")
     usersFuture
   }
@@ -41,7 +57,9 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
     users.map(users => users.users.map(userToPerson))
   }
 
-
-
+  private def buildClient = {
+    val accessToken = getAccessToken
+    new TwitterRestClient(consumerToken, accessToken)
+  }
 
 }

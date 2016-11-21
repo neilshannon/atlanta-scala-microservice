@@ -30,7 +30,7 @@ class AtlantaScalaMicroserviceSpec extends FlatSpec with Matchers with Scalatest
   }
 
   "Service" should "return redirect to index.html at root context" in {
-    Get.apply() ~> httpService.routes ~> check {
+    Get() ~> httpService.routes ~> check {
       status shouldBe Found
       val locationHeader = response.headers.find(_.name() == "Location")
       locationHeader.foreach(_.value() shouldBe "/site/index.html")
@@ -38,7 +38,7 @@ class AtlantaScalaMicroserviceSpec extends FlatSpec with Matchers with Scalatest
   }
 
   "Service" should "return a js file when requested" in {
-    Get.apply("/site/js/lodash.min.js") ~> httpService.routes ~> check {
+    Get("/site/js/lodash.min.js") ~> httpService.routes ~> check {
       status shouldBe OK
     }
   }
@@ -46,11 +46,21 @@ class AtlantaScalaMicroserviceSpec extends FlatSpec with Matchers with Scalatest
   "Service" should "get a list of all persons" in {
     val contactsJson = loadFile("contacts.json")
 
-    Get.apply("/person") ~> httpService.routes ~> check {
+    Get("/person") ~> httpService.routes ~> check {
       status shouldBe OK
       contentType shouldBe ContentTypes.`application/json`
       val responseJson = responseAs[String]
       responseJson shouldEqual contactsJson
+    }
+  }
+
+  "Twitter Service" should "parse out request token and redirect to oauth/authorize" in {
+    Get("/twitter/authorize") ~> httpService.routes ~> check {
+      status shouldBe Found
+      header("location") match {
+        case Some(header) => header.value() should startWith("https://api.twitter.com/oauth/authorize?oauth_token=")
+        case None => fail("Location header not set")
+      }
     }
   }
 

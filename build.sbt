@@ -49,6 +49,7 @@ libraryDependencies ++= {
     "com.typesafe"             % "config" % "1.3.0",
     "ch.qos.logback"           % "logback-classic" % "1.1.3",
     "com.danielasfregola"     %% "twitter4s" % "2.0",
+    "com.github.scribejava"    % "scribejava-apis" % "3.3.0",
     "org.scalatest"           %% "scalatest" % scalaTestV % "test",
     "org.mockito"              % "mockito-core" % "2.2.9" % "test",
     "org.springframework"      % "spring-test" % springV % "test"
