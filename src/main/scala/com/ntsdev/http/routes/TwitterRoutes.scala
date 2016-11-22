@@ -11,12 +11,16 @@ import com.ntsdev.service.TwitterService
 import com.softwaremill.session.SessionDirectives._
 import com.softwaremill.session.SessionManager
 import com.softwaremill.session.SessionOptions._
+import org.slf4j.LoggerFactory
 
 import scala.concurrent.ExecutionContext
 
 class TwitterRoutes(var twitterService: TwitterService)
                    (implicit executionContext: ExecutionContext, sessionManager: SessionManager[Map[String, String]])
                     extends Directives with Twitter4sJsonSupport with JsonSupport {
+
+  private val log = LoggerFactory.getLogger(getClass)
+
   val route = {
     logRequestResult("atlanta-scala-microservice") {
       get {
@@ -45,6 +49,7 @@ class TwitterRoutes(var twitterService: TwitterService)
                 val accessToken = twitterService.getAccessToken(oauthRequestToken, oauth_verifier)
                 val accessTokenAndSecret = Map("accessToken" -> accessToken.key, "accessSecret" -> accessToken.secret)
                 setSession(oneOff, usingCookies, accessTokenAndSecret) {
+                  log.debug(s"BaseUrl: [${EnvironmentConfig.baseUrl}]")
                   redirect(Uri(s"${EnvironmentConfig.baseUrl}/contacts"), StatusCodes.Found)
                 }
               }

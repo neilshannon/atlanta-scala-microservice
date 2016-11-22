@@ -20,7 +20,7 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
 
   def requestTokenService: OAuth10aService = {
     val callbackUrl = EnvironmentConfig.callbackUrl
-    log.debug("Callback URL: [$callbackUrl]")
+    log.debug(s"*** Callback URL: [$callbackUrl]")
 
     new ServiceBuilder()
       .apiKey(consumerKey)
