@@ -5,6 +5,7 @@ import akka.http.scaladsl.server.Directives
 import com.danielasfregola.twitter4s.entities.AccessToken
 import com.danielasfregola.twitter4s.http.unmarshalling.{JsonSupport => Twitter4sJsonSupport}
 import com.github.scribejava.core.model.OAuth1RequestToken
+import com.ntsdev.config.EnvironmentConfig
 import com.ntsdev.http.marshalling.JsonSupport
 import com.ntsdev.service.TwitterService
 import com.softwaremill.session.SessionDirectives._
@@ -15,7 +16,7 @@ import scala.concurrent.ExecutionContext
 
 class TwitterRoutes(var twitterService: TwitterService)
                    (implicit executionContext: ExecutionContext, sessionManager: SessionManager[Map[String, String]])
-                    extends Directives with Twitter4sJsonSupport with JsonSupport {
+                    extends Directives with Twitter4sJsonSupport with JsonSupport with EnvironmentConfig {
   val route = {
     logRequestResult("atlanta-scala-microservice") {
       get {
@@ -44,7 +45,7 @@ class TwitterRoutes(var twitterService: TwitterService)
                 val accessToken = twitterService.getAccessToken(oauthRequestToken, oauth_verifier)
                 val accessTokenAndSecret = Map("accessToken" -> accessToken.key, "accessSecret" -> accessToken.secret)
                 setSession(oneOff, usingCookies, accessTokenAndSecret) {
-                  redirect(Uri("http://localhost:8080/contacts"), StatusCodes.Found)
+                  redirect(Uri(s"$baseUrl/contacts"), StatusCodes.Found)
                 }
               }
             }
