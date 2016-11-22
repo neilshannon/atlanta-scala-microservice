@@ -1,8 +1,8 @@
 ---
 applications:
 - name: atlanta-scala-microservice
-  path: target/universal/atlanta-scala-microservice-1.0.12.zip
-  command: $HOME/atlanta-scala-microservice-1.0.12/bin/atlanta-scala-microservice -java-home $HOME/.java-buildpack/open_jdk_jre -Dspring.profiles.active=cloud
+  path: target/universal/atlanta-scala-microservice-1.0.13.zip
+  command: $HOME/atlanta-scala-microservice-1.0.13/bin/atlanta-scala-microservice -java-home $HOME/.java-buildpack/open_jdk_jre -Dspring.profiles.active=cloud
   memory: 1024M
   timeout: 180
   disk_quota: 2G

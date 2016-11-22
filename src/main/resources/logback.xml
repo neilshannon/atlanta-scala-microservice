@@ -8,6 +8,7 @@
     </appender>
 
     <logger name="org.neo4j.ogm" level="INFO"/>
+    <logger name="com.ntsdev" level="DEBUG"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />

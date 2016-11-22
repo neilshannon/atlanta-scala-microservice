@@ -8,16 +8,20 @@ import com.github.scribejava.core.model.OAuth1RequestToken
 import com.github.scribejava.core.oauth.OAuth10aService
 import com.ntsdev.config.EnvironmentConfig
 import com.ntsdev.domain.Person
+import org.slf4j.LoggerFactory
 
 import scala.collection.JavaConversions
 import scala.concurrent.{ExecutionContext, Future}
 
 class TwitterService(implicit executionContext: ExecutionContext) extends EnvironmentConfig {
 
+  private val log = LoggerFactory.getLogger(getClass)
   private val consumerToken = ConsumerToken(consumerKey, consumerSecret)
 
   def requestTokenService: OAuth10aService = {
     val callbackUrl = EnvironmentConfig.callbackUrl
+    log.debug("Callback URL: [$callbackUrl]")
+
     new ServiceBuilder()
       .apiKey(consumerKey)
       .apiSecret(consumerSecret)
