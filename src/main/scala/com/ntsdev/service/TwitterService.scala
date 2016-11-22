@@ -17,10 +17,11 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
   private val consumerToken = ConsumerToken(consumerKey, consumerSecret)
 
   def requestTokenService: OAuth10aService = {
+    val callbackUrl = EnvironmentConfig.callbackUrl
     new ServiceBuilder()
       .apiKey(consumerKey)
       .apiSecret(consumerSecret)
-      .callback(EnvironmentConfig.callbackUrl)
+      .callback(callbackUrl)
       .build(TwitterApi.instance())
   }
 
