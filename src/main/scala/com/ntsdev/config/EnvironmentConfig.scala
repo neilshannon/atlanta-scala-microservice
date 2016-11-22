@@ -16,24 +16,13 @@ trait EnvironmentConfig {
 
   val interface = config.getString("http.interface")
   val port = config.getInt("http.port")
+  val baseUrl = config.getString("http.baseurl")
 
   val twitterConfig = config.getConfig("twitter")
   val consumerKey = twitterConfig.getString("consumer.key")
   val consumerSecret = twitterConfig.getString("consumer.secret")
   val defaultAccessTokenKey = twitterConfig.getString("access.key")
   val defaultAccessSecret = twitterConfig.getString("access.secret")
-}
+  val callbackUrl = twitterConfig.getString("callbackurl")
 
-object EnvironmentConfig extends EnvironmentConfig {
-  def baseUrl: String = {
-    dynamicConfig.getString("http.baseurl")
-  }
-
-  def callbackUrl: String = {
-    dynamicConfig.getString("twitter.callbackurl")
-  }
-
-  private def dynamicConfig: Config = {
-    ConfigFactory.systemEnvironment().withFallback(ConfigFactory.load())
-  }
 }
