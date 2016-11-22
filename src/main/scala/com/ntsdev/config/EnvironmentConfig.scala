@@ -13,7 +13,7 @@ trait EnvironmentConfig {
   val neo4jUser = neo4jConfig.getString("username")
   val neo4jPass = neo4jConfig.getString("password")
 
-  val activeSpringProfile = config.getString("SPRING_PROFILES_ACTIVE")
+  val activeSpringProfile = config.getString("spring.profiles.active")
 
   val interface = config.getString("http.interface")
   val port = config.getInt("http.port")
