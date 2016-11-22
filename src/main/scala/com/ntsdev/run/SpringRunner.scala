@@ -11,7 +11,7 @@ class SpringRunner
 object SpringRunner extends App with EnvironmentConfig {
   val logger = LoggerFactory.getLogger(getClass)
 
-  logger.info(s"Active Spring Profile: [${activeSpringProfile}]")
+  logger.info(s"Active Spring Profile: [$activeSpringProfile]")
 
   if("cloud" equals activeSpringProfile) {
     logger.info("Loading cloud configuration...")

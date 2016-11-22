@@ -11,10 +11,12 @@ import com.ntsdev.service.{PersonService, TwitterService}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import com.softwaremill.session.{SessionConfig, SessionManager, SessionUtil}
+import org.springframework.context.annotation.Primary
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Service
+@Primary
 class AtlantaScalaMicroservice extends Directives with EnvironmentConfig {
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
