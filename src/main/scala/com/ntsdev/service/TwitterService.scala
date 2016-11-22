@@ -24,9 +24,9 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
       .build(TwitterApi.instance())
   }
 
-  def getAccessToken: AccessToken = {
-    //TODO get request token, bind access token in cookie
-    AccessToken(defaultAccessTokenKey, defaultAccessSecret)
+  def getAccessToken(request_token: OAuth1RequestToken, oauth_verifier: String): AccessToken = {
+    val oauthAccessToken = requestTokenService.getAccessToken(request_token, oauth_verifier) //todo async
+    AccessToken(oauthAccessToken.getToken, oauthAccessToken.getTokenSecret)
   }
 
   def getRequestToken: OAuth1RequestToken = {
@@ -38,9 +38,10 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
   }
 
   def getFriends(accessToken: AccessToken): Future[Users] = {
-    val client = buildClient
-    val usersFuture = client.getFriendsForUser("ntshannon")
-    usersFuture
+    val client = buildClient(accessToken)
+    client.verifyCredentials().flatMap{ creds =>
+      client.getFriendsForUser(creds.screen_name)
+    }
   }
 
   def usersToPersons(users: Future[Users]): Future[Seq[Person]] = {
@@ -57,8 +58,7 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
     users.map(users => users.users.map(userToPerson))
   }
 
-  private def buildClient = {
-    val accessToken = getAccessToken
+  private def buildClient(accessToken: AccessToken) = {
     new TwitterRestClient(consumerToken, accessToken)
   }
 

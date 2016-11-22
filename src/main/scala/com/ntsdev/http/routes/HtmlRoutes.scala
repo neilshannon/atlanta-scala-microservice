@@ -4,10 +4,13 @@ import java.nio.file.{Files, Path, Paths}
 
 import akka.http.scaladsl.model.{HttpRequest, StatusCodes, Uri}
 import akka.http.scaladsl.server.Directives._
+import com.softwaremill.session.SessionManager
+import com.softwaremill.session.SessionDirectives._
+import com.softwaremill.session.SessionOptions._
 
 import scala.concurrent.ExecutionContext
 
-class HtmlRoutes(implicit executionContext: ExecutionContext) {
+class HtmlRoutes(implicit executionContext: ExecutionContext, sessionManager: SessionManager[Map[String, String]]) {
 
   val staticContentDir = calculateStaticPath()
   val staticPath = "site"
@@ -25,7 +28,9 @@ class HtmlRoutes(implicit executionContext: ExecutionContext) {
     }
   } ~
   pathSingleSlash {
-    redirect(Uri("/site/index.html"), StatusCodes.Found)
+    invalidateSession(oneOff, usingCookies) {
+      redirect(Uri("/site/index.html"), StatusCodes.Found)
+    }
   }
 
   private def calculateStaticPath(): Path = {

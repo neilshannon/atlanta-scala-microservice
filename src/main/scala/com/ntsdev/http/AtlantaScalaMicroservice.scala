@@ -10,15 +10,18 @@ import com.ntsdev.http.routes.{HtmlRoutes, JsonRoutes, TwitterRoutes}
 import com.ntsdev.service.{PersonService, TwitterService}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import com.softwaremill.session.{SessionConfig, SessionManager, SessionUtil}
 
 import scala.concurrent.{ExecutionContext, Future}
-
 
 @Service
 class AtlantaScalaMicroservice extends Directives with EnvironmentConfig {
   implicit val system = ActorSystem()
   implicit val materializer = ActorMaterializer()
   implicit val executor: ExecutionContext = system.dispatcher
+
+  private val sessionConfig = SessionConfig.default(SessionUtil.randomServerSecret())
+  implicit val sessionManager = new SessionManager[Map[String, String]](sessionConfig)
 
   var _personService: PersonService = _
 

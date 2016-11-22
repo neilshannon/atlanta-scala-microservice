@@ -24,6 +24,6 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
   }
 
   implicit val personFormat: JsonFormat[Person] = lazyFormat(
-    jsonFormat(Person, "id", "firstName", "lastName", "google_id", "contacts")
+    jsonFormat(Person, "id", "firstName", "lastName", "twitter_id", "contacts")
   )
 }
