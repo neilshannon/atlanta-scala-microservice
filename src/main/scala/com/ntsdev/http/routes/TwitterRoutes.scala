@@ -16,7 +16,7 @@ import scala.concurrent.ExecutionContext
 
 class TwitterRoutes(var twitterService: TwitterService)
                    (implicit executionContext: ExecutionContext, sessionManager: SessionManager[Map[String, String]])
-                    extends Directives with Twitter4sJsonSupport with JsonSupport with EnvironmentConfig {
+                    extends Directives with Twitter4sJsonSupport with JsonSupport {
   val route = {
     logRequestResult("atlanta-scala-microservice") {
       get {
@@ -45,7 +45,7 @@ class TwitterRoutes(var twitterService: TwitterService)
                 val accessToken = twitterService.getAccessToken(oauthRequestToken, oauth_verifier)
                 val accessTokenAndSecret = Map("accessToken" -> accessToken.key, "accessSecret" -> accessToken.secret)
                 setSession(oneOff, usingCookies, accessTokenAndSecret) {
-                  redirect(Uri(s"$baseUrl/contacts"), StatusCodes.Found)
+                  redirect(Uri(s"${EnvironmentConfig.baseUrl}/contacts"), StatusCodes.Found)
                 }
               }
             }

@@ -20,7 +20,7 @@ class TwitterService(implicit executionContext: ExecutionContext) extends Enviro
     new ServiceBuilder()
       .apiKey(consumerKey)
       .apiSecret(consumerSecret)
-      .callback(callbackUrl)
+      .callback(EnvironmentConfig.callbackUrl)
       .build(TwitterApi.instance())
   }
 
