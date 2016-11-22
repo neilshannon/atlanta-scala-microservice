@@ -18,7 +18,7 @@ resolvers ++= Seq(
   "Artifactory" at "https://maven.artifactory.homedepot.com/artifactory/libs-release-local/"
 )
 
-publishTo := Some("Artifactory Realm" at "https://maven.artifactory.homedepot.com/artifactory/libs-snapshots-local")
+publishTo := Some("Artifactory Realm" at "https://maven.artifactory.homedepot.com/artifactory/libs-release-local")
 credentials += Credentials("Artifactory Realm", "maven.artifactory.homedepot.com", sys.env.getOrElse("artifactory_user", ""), sys.env.getOrElse("artifactory_password", ""))
 
 libraryDependencies ++= {
